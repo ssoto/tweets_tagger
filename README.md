@@ -26,7 +26,10 @@ And just run it using `uvicorn`:
 ```shell script
 uvicorn tweet_tagger.main:api --debug
 ```
-
+## Front creation
+Install Node last version
+Install vue cli last version
+npm install -g @vue/cli-service-global
 ## Tweets importation
 To import builds you need first download it in CSV format, and then import into your mongodb.
 

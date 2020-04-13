@@ -50,5 +50,5 @@ class TweetsFactory:
             # FIXME: this behaviour should be in api code not in model
             raise HTTPException(
                 status_code=204,
-                detail=f'Tweet with {tweet_id} doesn\'t find.')
+                detail=f'Tweet with {tweet_id} hasn\'t been found.')
         return TweetModel(json=result)

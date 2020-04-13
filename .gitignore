@@ -130,3 +130,6 @@ dmypy.json
 
 # intellij stuff
 .idea/
+
+# csv stuff
+output_got.csv
