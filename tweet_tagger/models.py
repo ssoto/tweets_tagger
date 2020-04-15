@@ -1,4 +1,5 @@
 import traceback
+import json
 
 from fastapi import HTTPException
 
@@ -8,13 +9,18 @@ from tweet_tagger import settings
 class TweetModel:
 
     def __init__(self, json: dict):
+        tweet_id = json.pop('_id')
+        json.update({'tweet_id': tweet_id})
         self.json = json
 
-    def as_json(self):
+    async def as_json(self):
+        permalink = self.json['permalink']
+        tweet_id = self.json['tweet_id']
+        print(f'permalink is {permalink}, and tweet_id is {tweet_id}')
         return self.json
 
     @classmethod
-    def update_tweet_category(cls, tweet_id, category):
+    async def update_tweet_category(cls, tweet_id: str, category: str):
         result = settings.TWEETS_COL.update(
             {'_id': tweet_id},
             {'$set': {'category': category}},
@@ -25,18 +31,19 @@ class TweetModel:
 class TweetsFactory:
 
     @classmethod
-    def retrieve_untagged_tweet(cls, tweet_id: int):
+    async def retrieve_untagged_tweet(cls, tweet_id: str):
         if not tweet_id:
-            return cls.get_untagged_tweet()
+            return await cls.get_untagged_tweet()
         else:
-            return cls.get_tweet(tweet_id)
+            return await cls.get_tweet(tweet_id)
 
     @classmethod
-    def get_untagged_tweet(cls):
+    async def get_untagged_tweet(cls):
         try:
-            return TweetModel(settings.TWEETS_COL.find_one(
+            # FIXME: change pymongo with robot (async python driver)
+            return await TweetModel(settings.TWEETS_COL.find_one(
                 {'category': {'$exists': False}}
-            ))
+            )).as_json()
         except Exception as e:
             raise HTTPException(
                 status_code=500,
@@ -44,11 +51,11 @@ class TweetsFactory:
             )
 
     @classmethod
-    def get_tweet(cls, tweet_id: int):
+    async def get_tweet(cls, tweet_id: str):
         result = settings.TWEETS_COL.find_one({'_id': tweet_id})
         if not result:
             # FIXME: this behaviour should be in api code not in model
             raise HTTPException(
                 status_code=204,
                 detail=f'Tweet with {tweet_id} hasn\'t been found.')
-        return TweetModel(json=result)
+        return await TweetModel(json=result).as_json()

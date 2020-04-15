@@ -33,7 +33,7 @@ export default class TweetsTagger extends Vue {
   public sendCategory(category: string): void {
     let self = this;
     this.$store.dispatch('postTweetCategory', {
-      id: self.tweet._id,
+      id: self.tweet.tweet_id,
       category: category,
       ... {
         callback() {

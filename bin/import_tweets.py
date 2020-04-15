@@ -18,7 +18,8 @@ def get_arguments():
 def main():
     args = get_arguments()
     df = pd.read_csv(args.csv_path)
-    df = df.rename(columns={'id': '_id'})
+    df['_id'] = df['id'].astype(str)
+    df = df.drop(columns='id')
     save_data = [
         dict((k, maybe_box_datetimelike(v))
              for k, v in zip(df.columns, row) if v is not None and v == v)
