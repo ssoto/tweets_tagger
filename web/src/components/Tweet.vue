@@ -4,8 +4,8 @@
     {{ tweet.text }}
     </p>
     <p class="links">
-      <a :href="tweet.permalink">{{ tweet.date }}</a>  |
-      <a :href="'https://twitter.com/@' + tweet.username">@{{ tweet.username }}</a>
+      <a :href="tweet.permalink" target="_blank">{{ tweet.date }}</a>  |
+      <a :href="'https://twitter.com/@' + tweet.username" target="_blank">@{{ tweet.username }}</a>
     </p>
   </div>
 </template>
