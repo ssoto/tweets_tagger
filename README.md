@@ -27,19 +27,20 @@ And just run it using `uvicorn`:
 uvicorn tweet_tagger.main:api --debug
 ```
 In order to test API you can load:
-* OpenAPI endpoint http://127.0.0.1:8000/docs 
+* <a href="http://127.0.0.1:8000/docs" target="_blank">OpenAPI endpoint</a>
 
-or 
-* Redoc endpoint http://127.0.l0.1:8000/redoc
+or / and
+* <a href="http://127.0.0.1:8000/redoc" target="_blank">Redoc endpoint</a>
 
 There you can read endpoints documentation, but by the moment no data has been imported... it's time to do it!
 ## Tweet data importation
-The app use `MongoDB` so you need install it. You process documenation on it's own webpage: [mongodb.com](https://docs.mongodb.com/manual/installation/). 
+The app use `MongoDB` so you need install it. You process documenation on it's own webpage: 
+<a href="https://docs.mongodb.com/manual/installation/" target="_blank">mongodb.com</a>
+
 One you have done, its time to donwload data and import into database.
 
 ### Download tweets to a CSV
-We used [GetOldTweets3 module](https://github.com/Mottl/GetOldTweets3) to download tweets. With this command you will 
-download all tweets at 10 kms from Seville related with `Coronavirus` and `Holy Week`  in Spanish language:
+We used <a href="https://github.com/Mottl/GetOldTweets3" target="_blank">GetOldTweets3 module</a> to download tweets. With this command you will download all tweets at 10 kms from Seville related with `Coronavirus` and `Holy Week`  in Spanish language:
 ```shell script
 GetOldTweets3 --querysearch "coronaviru+semana+santa" --near "Sevilla" --within 10km --maxtweets 100 --lang es
 ```
