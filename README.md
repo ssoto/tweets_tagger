@@ -67,5 +67,7 @@ cd web
 npm install
 npm run build
 ```
+Now you can tagger your tweets on [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 This built code has been served by our fastapi [server that must to be running](run-server)
+
