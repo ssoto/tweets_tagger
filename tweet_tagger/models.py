@@ -20,10 +20,21 @@ class TweetModel:
         return self.json
 
     @classmethod
-    async def update_tweet_category(cls, tweet_id: str, category: str):
+    async def push_tweet_categorization(cls, tweet_id: str,
+                                        category: str,
+                                        user_id: str) -> dict:
+        """
+
+        :param tweet_id: tweet to update identifier
+        :param category: category to assign to tweet
+        :param user_id: user identifier
+        :return:
+        """
         result = settings.TWEETS_COL.update(
             {'_id': tweet_id},
-            {'$set': {'category': category}},
+            # {'$set': {'category': category}},
+            {'$push': {'categories': {'user_id': user_id,
+                                      'category': category}}}
         )
         return result
 
@@ -42,7 +53,7 @@ class TweetsFactory:
         try:
             # FIXME: change pymongo with robot (async python driver)
             return await TweetModel(settings.TWEETS_COL.find_one(
-                {'category': {'$exists': False}}
+                {'categories': {'$exists': False}}
             )).as_json()
         except Exception as e:
             raise HTTPException(
