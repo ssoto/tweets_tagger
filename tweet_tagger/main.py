@@ -29,13 +29,13 @@ async def retrieve_tweet(tweet_id: str = None):
 
 
 @api.post('/tweet')
-async def update_post_category(tweet_id: str, category: str):
+async def update_post_category(tweet_id: str, category: str, user_id: str):
     if category not in TWITTER_CATEGORIES:
         raise HTTPException(
             status_code=400,
             detail='invalid category, valida values are: {}'.format(TWITTER_CATEGORIES)
         )
-    return await TweetModel.update_tweet_category(tweet_id, category)
+    return await TweetModel.push_tweet_categorization(tweet_id, category, user_id)
 
 
 api.mount("/", StaticFiles(directory="./web/dist"), name="web")
